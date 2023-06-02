@@ -1,6 +1,10 @@
 <?php
 
-$con = require __DIR__ . "/DB.php";
+require 'DB.php';
+$user = new CRUD();
+// $user->CreateData("User");
+$user->DisplayById(2, "User");
+
 
 
 
