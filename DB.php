@@ -17,21 +17,21 @@ class CRUD
       if ($Db_Connect->error) {
          die('connection Error' . $Db_Connect->error);
       } else {
-         echo "connected";
+         
          return $Db_Connect;
       }
    }
 
-   function CreateData(string $tablename)
+   function CreateData(string $tablename, $user)
    {
       $con = $this->connect();
       $stm = $con->prepare("INSERT INTO " . $tablename . "(name,email,password,photo_url,role) VALUES(?,?,?,?,?)");
-      $stm->bind_param("sssss", $name, $email, $password, $url, $roll);
-      $name = "abe";
-      $email = "pasword@gmail.com";
-      $password = "pasworddd";
-      $url = "jaisdfkjsdf.url";
-      $roll = "User";
+      $stm->bind_param("sssss", $name, $email, $password, $url, $role);
+      $name = $user['name'];
+      $email = $user['email'];
+      $password = $user['password'];
+      $url = $user['url'];
+      $role = $user['role'];
       $stm->execute();
       $insertedId = $stm->insert_id;
       $stm->close();
@@ -53,8 +53,12 @@ class CRUD
       $stm = $con->prepare("SELECT * FROM " . $tablename);
       $stm->execute();
       $result = $stm->get_result();
-      $getter = $result->fetch_all();
-      echo json_encode($getter);
+      $user = [];
+      while ($getter = $result->fetch_assoc()) {
+         $user[] = $getter;
+      }
+      return json_encode(['user' => $user]);
+
    }
    function DisplayById(int $id, string $tablename)
    {
@@ -66,7 +70,7 @@ class CRUD
       $result = $stm->get_result();
       $insertedData = $result->fetch_assoc();
       $u = json_encode($insertedData);
-      echo $u;
+      return $u;
    }
 
 }
