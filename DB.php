@@ -54,7 +54,7 @@ class CRUD
          case ("Bookmark"):
             $table = [
                "INSERT INTO Bookmark(user_id,place_id,event_id) VALUES(?,?,?)",
-               "iiss",
+               "iii",
                [
                   (int) $user['user_id'],
                   (int) $user['place_id'],
@@ -91,6 +91,35 @@ class CRUD
 
                ]
             ];
+            break;
+         case ("Description"):
+            $table = [
+               "INSERT INTO Description(place_id,event_id,language,content) VALUES(?,?,?,?)",
+               "iiss",
+               [
+
+                  (int) $user['place_id'],
+                  (int) $user['event_id'],
+                  $user['language'],
+                  $user['content']
+               ]
+            ];
+            break;
+         case ("Recommendation"):
+            $table = [
+               "INSERT INTO Recommendation(place_id,name,pricing) VALUES(?,?,?)",
+               "iss",
+               [
+
+                  (int) $user['place_id'],
+                  $user['name'],
+                  $user['pricing']
+
+               ]
+            ];
+            break;
+
+
 
 
       }
@@ -190,9 +219,35 @@ class CRUD
 
             ];
             break;
+         case ("Description"):
+            $table = [
+               "UPDATE Description SET language = ? ,content = ? WHERE id = ?",
+               "ssi",
+               [
+                  $Data['language'] == "" ? $GetOldData['language'] : $Data['language'],
+                  $Data['content'] == "" ? $GetOldData['content'] : $Data['content'],
+                  $id
+               ]
+
+            ];
+            break;
+         case ("Recommendation"):
+            $table = [
+               "UPDATE Recommendation SET name = ? ,pricing = ? WHERE id = ?",
+               "ssi",
+               [
+                  $Data['name'] == "" ? $GetOldData['name'] : $Data['name'],
+                  $Data['pricing'] == "" ? $GetOldData['pricing'] : $Data['pricing'],
+                  $id
+               ]
+            ];
+            break;
+
+
+
       }
 
-      echo $Data['title'];
+     
       $sql = $table[0];
       $result = $con->prepare($sql);
       $result->bind_param($table[1], ...$table[2]);

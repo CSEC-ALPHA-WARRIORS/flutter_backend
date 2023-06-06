@@ -6,9 +6,9 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method == 'POST') {
    if ($_POST['id']) {
-      $use = ['comment' => $_POST['comment'] ?? '', 'rating' => $_POST['rating'] ?? ''];
+      $use = ['language' => $_POST['language'] ?? '', 'content' => $_POST['content'] ?? ''];
       $user = new CRUD();
-      $update = $user->UpdateById('Review', (int) $_POST['id'], $use);
+      $update = $user->UpdateById('Description', (int) $_POST['id'], $use);
       echo $update;
 
 
