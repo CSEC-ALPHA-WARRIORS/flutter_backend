@@ -19,7 +19,7 @@ function GetEvents()
    if (isset($_GET['id'])) {
       $id = (integer) $_GET['id'];
       $user = new CRUD();
-      $res = $user->DisplayById($id, "Events");
+      $res = $user->DisplayById($id, "Event");
       http_response_code(200);
       echo $res;
    } else {

@@ -77,6 +77,21 @@ class CRUD
                ]
             ];
             break;
+         case ("Place"):
+            $table = [
+               "INSERT INTO Place(title,latitude,longitude,region,distance) VALUES(?,?,?,?,?)",
+               "siiii",
+               [
+                  $user['title'],
+                  (int) $user['latitude'],
+                  (int) $user['longitude'],
+                  (int) $user['region'],
+                  (int) $user['distance'],
+
+
+               ]
+            ];
+
 
       }
 
@@ -148,20 +163,36 @@ class CRUD
             break;
          case ("Event"):
             $table = [
-               "UPDATE  Event SET title = ?,latitude = ?,longitude = ?,start_date = ?,end_date = ?  WHERE id = ? ",
-               "siissi",
+               "UPDATE Event SET title = ? ,latitude = ?, longitude = ?,start_date = ? ,end_date = ? ,price = ?  WHERE id = ?",
+               "siissii",
                [
-                  $Data['title'] ? $GetOldData['name'] : $Data['title'],
-                  (int) $Data['latitude'] ? $GetOldData['name'] : (int) $Data['latitude'],
-                  (int) $Data['longitude'] ? $GetOldData['name'] : (int) $Data['longitude'],
-                  $Data['start_date'] ? $GetOldData['name'] : $Data['start_date'],
-                  $Data['end_date'] ? $GetOldData['name'] : $Data['end_date'],
+                  $Data['title'] == "" ? $GetOldData['title'] : $Data['title'],
+                  (int) $Data['latitude'] == "" ? $GetOldData['latitude'] : (int) $Data['latitude'],
+                  (int) $Data['longitude'] == "" ? $GetOldData['longitude'] : (int) $Data['longitude'],
+                  $Data['start_date'] == "" ? $GetOldData['start_date'] : $Data['start_date'],
+                  $Data['end_date'] == "" ? $GetOldData['end_date'] : $Data['end_date'], $Data['price'] == "" ? $GetOldData['price'] : $Data['price'],
                   $id
                ]
             ];
+            break;
+         case ("Place"):
+            $table = [
+               "UPDATE Place SET title = ? ,latitude = ?, longitude = ?,region = ? ,distance = ? WHERE id = ?",
+               "siiiii",
+               [
+                  $Data['title'] == "" ? $GetOldData['title'] : $Data['title'],
+                  (int) $Data['latitude'] == "" ? $GetOldData['latitude'] : (int) $Data['latitude'],
+                  (int) $Data['longitude'] == "" ? $GetOldData['longitude'] : (int) $Data['longitude'],
+                  (int) $Data['region'] == "" ? $GetOldData['region'] : $Data['region'],
+                  (int) $Data['distance'] == "" ? $GetOldData['distance'] : $Data['distance'],
+                  $id
+               ]
+
+            ];
+            break;
       }
 
-
+      echo $Data['title'];
       $sql = $table[0];
       $result = $con->prepare($sql);
       $result->bind_param($table[1], ...$table[2]);
