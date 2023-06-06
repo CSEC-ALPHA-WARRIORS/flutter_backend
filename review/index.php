@@ -2,7 +2,7 @@
 require '../DB.php';
 header('Content-Type: application/json');
 $method = $_SERVER['REQUEST_METHOD'];
-echo $method;
+
 switch ($method) {
    case ('GET'):
       GetReviews();
@@ -10,8 +10,14 @@ switch ($method) {
    case ('POST'):
       CreateReview();
       break;
+   default:
+      // Handle unknown endpoint
+      header('Content-Type: application/json');
+      http_response_code(404);
+      echo json_encode(['error' => 'Method not found']);
 
-   default;
+
+
 }
 
 
@@ -21,6 +27,7 @@ function GetReviews()
    if (isset($_GET['id'])) {
       $id = (integer) $_GET['id'];
       $user = new CRUD();
+      echo "helo";
       $res = $user->DisplayById($id, "Review");
       http_response_code(200);
       echo $res;
@@ -32,11 +39,8 @@ function GetReviews()
       echo $um;
    }
 
-   // } else {
-//    // Handle unknown endpoint
-//    header('Content-Type: application/json');
-//    http_response_code(404);
-//    echo json_encode(['error' => 'Endpoint not found']);
+  
+
 }
 function CreateReview()
 {

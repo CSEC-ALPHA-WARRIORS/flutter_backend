@@ -25,55 +25,64 @@ class CRUD
    function CreateData(string $tablename, $user)
    {
 
-      $table = [
-         'User' => [
-            "INSERT INTO User(name,email,password,photo_url,role) VALUES(?,?,?,?,?)",
-            "sssss",
-            [
-               $user['name'] ?? '',
-               $user['email'] ?? '',
-               $user['password'] ?? '',
-               $user['url'] ?? '',
-               $user['role'] ?? ''
-            ]
-         ],
-         'Review' => [
-            "INSERT INTO Review(user_id,place_id,comment,rating) VALUES(?,?,?,?)",
-            "iiss",
-            [
-               (int) $user['user_id'],
-               (int) $user['place_id'],
-               $user['comment'],
-               $user['rating']
-            ]
-         ],
-         'Bookmark' => [
-            "INSERT INTO Bookmark(user_id,place_id,event_id) VALUES(?,?,?)",
-            "iiss",
-            [
-               (int) $user['user_id'],
-               (int) $user['place_id'],
-               (int) $user['event_id']
-            ]
-         ],
-         'Event' => [
-            "INSERT INTO Event(title,latitude,longitude,start_date,end_date,price) VALUES(?,?,?,?,?,?)",
-            "siissi",
-            [
-               $user['title'],
-               (int) $user['latitude'],
-               (int) $user['longitude'],
-               $user['start_date'],
-               $user['end_date'],
-               (int) $user['price']
+      switch ($tablename) {
+         case ("User"):
+            $table = [
+               "INSERT INTO User(name,email,password,photo_url,role) VALUES(?,?,?,?,?)",
+               "sssss",
+               [
+                  $user['name'] ?? '',
+                  $user['email'] ?? '',
+                  $user['password'] ?? '',
+                  $user['url'] ?? '',
+                  $user['role'] ?? ''
+               ]
+            ];
+            break;
+         case ("Review"):
+            $table = [
+               "INSERT INTO Review(user_id,place_id,comment,rating) VALUES(?,?,?,?)",
+               "iiss",
+               [
+                  (int) $user['user_id'],
+                  (int) $user['place_id'],
+                  $user['comment'],
+                  $user['rating']
+               ]
+            ];
+            break;
+         case ("Bookmark"):
+            $table = [
+               "INSERT INTO Bookmark(user_id,place_id,event_id) VALUES(?,?,?)",
+               "iiss",
+               [
+                  (int) $user['user_id'],
+                  (int) $user['place_id'],
+                  (int) $user['event_id']
+               ]
+            ];
+            break;
+         case ("Event"):
+            $table = [
+               "INSERT INTO Event(title,latitude,longitude,start_date,end_date,price) VALUES(?,?,?,?,?,?)",
+               "siissi",
+               [
+                  $user['title'],
+                  (int) $user['latitude'],
+                  (int) $user['longitude'],
+                  $user['start_date'],
+                  $user['end_date'],
+                  (int) $user['price']
 
-            ]
-         ]
+               ]
+            ];
+            break;
 
-      ];
+      }
+
       $con = $this->connect();
-      $stm = $con->prepare($table[$tablename][0]);
-      $stm->bind_param($table[$tablename][1], ...$table[$tablename][2]);
+      $stm = $con->prepare($table[0]);
+      $stm->bind_param($table[1], ...$table[2]);
       $stm->execute();
       $insertedId = $stm->insert_id;
       $stm->close();
@@ -114,22 +123,48 @@ class CRUD
       $u = json_encode($insertedData);
       return $u;
    }
+   function ret()
+   {
+
+   }
    function UpdateById(string $tablename, int $id, array $Data)
    {
       $con = $this->connect();
       $GetOldData = json_decode($this->DisplayById($id, $tablename), true);
+      switch ($tablename) {
+         case ("User"):
+            $table = [
+               "UPDATE User SET name = ? ,email = ? ,password = ? ,photo_url = ? ,role = ? WHERE id = ?",
+               "sssssi",
+               [isset($Data['name']) ? $GetOldData['name'] : $Data['name'], $Data['email'] == "" ? $GetOldData['email'] : $Data['email'], $Data['password'] == '' ? $GetOldData['password'] : $Data['password'], $Data['url'] == '' ? $GetOldData['photo_url'] : $Data['url'], $Data['role'] == '' ? $GetOldData['role'] : $Data['role'], $id]
+            ];
+            break;
+         case ("Review"):
+            $table = [
+               "UPDATE Review SET comment = ? ,rating = ?  WHERE id = ?",
+               "ssi",
+               [$Data['comment'] == "" ? $GetOldData['comment'] : $Data['comment'], $Data['rating'] == "" ? $GetOldData['rating'] : $Data['rating'], $id]
+            ];
+            break;
+         case ("Event"):
+            $table = [
+               "UPDATE  Event SET title = ?,latitude = ?,longitude = ?,start_date = ?,end_date = ?  WHERE id = ? ",
+               "siissi",
+               [
+                  $Data['title'] ? $GetOldData['name'] : $Data['title'],
+                  (int) $Data['latitude'] ? $GetOldData['name'] : (int) $Data['latitude'],
+                  (int) $Data['longitude'] ? $GetOldData['name'] : (int) $Data['longitude'],
+                  $Data['start_date'] ? $GetOldData['name'] : $Data['start_date'],
+                  $Data['end_date'] ? $GetOldData['name'] : $Data['end_date'],
+                  $id
+               ]
+            ];
+      }
 
 
-      $name = $Data['name'] == "" ? $GetOldData['name'] : $Data['name'];
-      $email = $Data['email'] == "" ? $GetOldData['email'] : $Data['email'];
-
-      $password = $Data['password'] == '' ? $GetOldData['password'] : $Data['password'];
-
-      $photo = $Data['url'] == '' ? $GetOldData['url'] : $Data['url'];
-      $role = $Data['role'] == '' ? $GetOldData['role'] : $Data['role'];
-      $sql = "UPDATE " . "$tablename " . "SET name = ? ,email = ? ,password = ? ,photo_url = ? ,role = ? WHERE id = ?";
+      $sql = $table[0];
       $result = $con->prepare($sql);
-      $result->bind_param("sssssi", $name, $email, $password, $photo, $role, $id);
+      $result->bind_param($table[1], ...$table[2]);
 
 
       $result->execute();
