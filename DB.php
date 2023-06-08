@@ -1,7 +1,6 @@
 <?php
 
 
-
 class CRUD
 {
 
@@ -105,6 +104,21 @@ class CRUD
                ]
             ];
             break;
+         case ("Category"):
+
+            $table = [
+               "INSERT INTO Category(name,describtion,cover_pic) VALUES(?,?,?)",
+               "sss",
+               [
+
+                  $user['name'],
+                  $user['describtion'],
+                  $user['cover_pic'],
+
+               ]
+            ];
+            break;
+
          case ("Recommendation"):
             $table = [
                "INSERT INTO Recommendation(place_id,name,pricing) VALUES(?,?,?)",
@@ -118,6 +132,20 @@ class CRUD
                ]
             ];
             break;
+         case ("CategoryPlace"):
+            $table = [
+               "INSERT INTO CategoryPlace(CategoryId,place_id) VALUES(?,?)",
+               "ii",
+               [
+                  (int) $user['CategoryId'],
+                  (int) $user['place_id'],
+
+
+
+               ]
+            ];
+            break;
+
 
 
 
@@ -242,6 +270,20 @@ class CRUD
                ]
             ];
             break;
+         case ("Category"):
+            $table = [
+               "UPDATE Category SET name = ? ,describtion = ? ,cover_pic = ? WHERE id = ?",
+               "sssi",
+               [
+                  $Data['name'] == "" ? $GetOldData['name'] : $Data['name'],
+                  $Data['describtion'] == "" ? $GetOldData['describtion'] : $Data['describtion'], $Data['cover_pic'] == "" ? $GetOldData['cover_pic'] : $Data['cover_pic'],
+                  $id
+               ]
+            ];
+            break;
+         
+
+
 
 
 
@@ -267,7 +309,7 @@ class CRUD
    }
    function Delete(int $id, string $tablename)
    {
-
+      
       $con = $this->connect();
       $sql = "DELETE FROM " . $tablename . " WHERE id = ?";
       $del = $con->prepare($sql);
