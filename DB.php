@@ -145,6 +145,21 @@ class CRUD
                ]
             ];
             break;
+         case ("Photo"):
+            $table = [
+               "INSERT INTO Photo(place_id,event_id,url) VALUES(?,?,?)",
+               "iis",
+               [
+
+                  (int) $user['place_id'],
+                  (int) $user['event_id'],
+                  $user['url']
+
+
+
+               ]
+            ];
+            break;
 
 
 
@@ -277,6 +292,16 @@ class CRUD
                [
                   $Data['name'] == "" ? $GetOldData['name'] : $Data['name'],
                   $Data['describtion'] == "" ? $GetOldData['describtion'] : $Data['describtion'], $Data['cover_pic'] == "" ? $GetOldData['cover_pic'] : $Data['cover_pic'],
+                  $id
+               ]
+            ];
+            break;
+         case ("Photo"):
+            $table = [
+               "UPDATE Photo SET url = ?  WHERE id = ?",
+               "si",
+               [
+                  $Data['url'] == "" ? $GetOldData['url'] : $Data['url'],
                   $id
                ]
             ];
