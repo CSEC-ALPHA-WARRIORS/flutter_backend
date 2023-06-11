@@ -210,10 +210,7 @@ class CRUD
       $u = json_encode($insertedData);
       return $u;
    }
-   function ret()
-   {
-
-   }
+ 
    function UpdateById(string $tablename, int $id, array $Data)
    {
       $con = $this->connect();
