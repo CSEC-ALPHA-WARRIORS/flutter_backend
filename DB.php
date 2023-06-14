@@ -64,11 +64,11 @@ class CRUD
          case ("Event"):
             $table = [
                "INSERT INTO Event(title,latitude,longitude,start_date,end_date,price) VALUES(?,?,?,?,?,?)",
-               "siissi",
+               "sddssi",
                [
                   $user['title'],
-                  (int) $user['latitude'],
-                  (int) $user['longitude'],
+                  (float) $user['latitude'],
+                  (float) $user['longitude'],
                   $user['start_date'],
                   $user['end_date'],
                   (int) $user['price']
@@ -79,11 +79,11 @@ class CRUD
          case ("Place"):
             $table = [
                "INSERT INTO Place(title,latitude,longitude,region,distance) VALUES(?,?,?,?,?)",
-               "siiii",
+               "sddii",
                [
                   $user['title'],
-                  (int) $user['latitude'],
-                  (int) $user['longitude'],
+                  (float) $user['latitude'],
+                  (float) $user['longitude'],
                   (int) $user['region'],
                   (int) $user['distance'],
 
@@ -233,11 +233,11 @@ class CRUD
          case ("Event"):
             $table = [
                "UPDATE Event SET title = ? ,latitude = ?, longitude = ?,start_date = ? ,end_date = ? ,price = ?  WHERE id = ?",
-               "siissii",
+               "sddssii",
                [
                   $Data['title'] == "" ? $GetOldData['title'] : $Data['title'],
-                  (int) $Data['latitude'] == "" ? $GetOldData['latitude'] : (int) $Data['latitude'],
-                  (int) $Data['longitude'] == "" ? $GetOldData['longitude'] : (int) $Data['longitude'],
+                  (float) $Data['latitude'] == "" ? $GetOldData['latitude'] : (float) $Data['latitude'],
+                  (float) $Data['longitude'] == "" ? $GetOldData['longitude'] : (float) $Data['longitude'],
                   $Data['start_date'] == "" ? $GetOldData['start_date'] : $Data['start_date'],
                   $Data['end_date'] == "" ? $GetOldData['end_date'] : $Data['end_date'], $Data['price'] == "" ? $GetOldData['price'] : $Data['price'],
                   $id
@@ -247,12 +247,12 @@ class CRUD
          case ("Place"):
             $table = [
                "UPDATE Place SET title = ? ,latitude = ?, longitude = ?,region = ? ,distance = ? WHERE id = ?",
-               "siiiii",
+               "sddiii",
                [
                   $Data['title'] == "" ? $GetOldData['title'] : $Data['title'],
-                  (int) $Data['latitude'] == "" ? $GetOldData['latitude'] : (int) $Data['latitude'],
-                  (int) $Data['longitude'] == "" ? $GetOldData['longitude'] : (int) $Data['longitude'],
-                  (int) $Data['region'] == "" ? $GetOldData['region'] : $Data['region'],
+                  (float) $Data['latitude'] == "" ? $GetOldData['latitude'] : (float) $Data['latitude'],
+                  (float) $Data['longitude'] == "" ? $GetOldData['longitude'] : (float) $Data['longitude'],
+                  (int) $Data['region'] == "" ? $GetOldData['region'] : (int) $Data['region'],
                   (int) $Data['distance'] == "" ? $GetOldData['distance'] : $Data['distance'],
                   $id
                ]

@@ -48,7 +48,7 @@
 | CreateReview          | POST         |         | Body:{user_id,place_id,comment,rating}                       | {user_id,place_id,comment,rating}                         | /review                     |
 | GetReviewByid         | GET          | {id}    |                                                              | {user_id,place_id,comment,rating}                         | /review?id=?                |
 | GetReview             | GET          |         |                                                              | {{id,user_id,place_id,comment,rating}}                    | /review                     |
-| UpdateReview          | POST         |         | Body:{id,user_id,place_id,comment,rating}                    | {id,user_id,place_id,comment,rating}                      | /review/update              |
+| UpdateReview          | POST         |         | Body:{id,comment,rating}                                     | {id,user_id,place_id,comment,rating}                      | /review/update              |
 | DeleteReview          | GET          | {id}    |                                                              | {"deleted id no ${id}"}                                   | /review/delete?id=?         |
 | CreateEvent           | POST         |         | Body:{title,latitude,longitude,start_date,end_date,price}    | {title,latitude,longitude,start_date,end_date,price}      | /event                      |
 | GetEventByid          | GET          | {id}    |                                                              | {id,title,latitude,longitude,start_date,end_date,price}   | /event?id=?                 |
@@ -63,5 +63,24 @@
 | CreateRecommendation  | POST         |         | Body:{place_id,name,pricing}                                 | {place_id,name,pricing}                                   | /recommendation             |
 | GetRecommendationByid | GET          | {id}    |                                                              | {place_id,name,pricing}                                   | /recommendation?id=?        |
 | GetRecommendation     | GET          |         |                                                              | {{place_id,name,pricing}}                                 | /recommendation             |
-| UpdateRecommendation  | POST         |         | Body:{id,place_id,name,pricing}                              | {id,place_id,name,pricing}                                | /recommendation/update      |
+| UpdateRecommendation  | POST         |         | Body:{id,name,pricing}                                       | {id,place_id,name,pricing}                                | /recommendation/update      |
 | DeleteRecommendation  | GET          | {id}    |                                                              | {"deleted id no ${id}"}                                   | /recommendation/delete?id=? |
+| CreateDescription     | POST         |         | Body:{place_id,event_id,language,content}                    | {place_id,event_id,language,content}                      | /description                |
+| GetDescriptionByid    | GET          | {id}    |                                                              | {id,place_id,event_id,language,content}                   | /description?id=?           |
+| GetDescription        | GET          |         |                                                              | {{id,place_id,event_id,language,content}}                 | /description                |
+| UpdateDescription     | POST         |         | Body:{id,place_id,event_id,language,content}                 | {id,place_id,event_id,language,content}                   | /description/update         |
+| DeleteDescription     | GET          | {id}    |                                                              | {"deleted id no ${id}"}                                   | /description/delete?id=?    |
+| CreatePhoto           | POST         |         | Body:{place_id,event_id,url}                                 | { place_id,event_id, url}                                 | /Photo                      |
+| GetPhotoByid          | GET          | {id}    |                                                              | {id, place_id,event_id, url}                              | /Photo?id=?                 |
+| GetPhoto              | GET          |         |                                                              | {{id, place_id,event_id, url}}                            | /Photo                      |
+| UpdatePhoto           | POST         |         | Body:{id, url}                                               | {id, place_id,event_id, url}                              | /Photo/update               |
+| DeletePhoto           | GET          | {id}    |                                                              | {"deleted id no ${id}"}                                   | /Photo/delete?id=?          |
+| CreateCategory        | POST         |         | Body:{name,desc,cover_url}                                   | {name,desc,cover_url}                                     | /category                   |
+| GetCategoryByid       | GET          | {id}    |                                                              | {id,name,desc,cover_url}                                  | /category?id=?              |
+| GetCategory           | GET          |         |                                                              | {{id,name,desc,cover_url}}                                | /category                   |
+| UpdateCategory        | POST         |         | Body:{id,name,desc,cover_url}                                | {name,desc,cover_url}                                     | /category                   |
+| DeleteCategory        | GET          | {id}    |                                                              | {"deleted id no ${id}"}                                   | /category/delete?id=?       |
+| CreateCategoryPlace   | POST         |         | Body:{category_id,place_id}                                  | {id,category_id,place_id}                                 | /categoryplace              |
+| GetCategoryPlaceByid  | GET          | {id}    |                                                              | {id,category_id,place_id}                                 | /categoryplace?id=?         |
+| GetCategoryPlace      | GET          |         | Body:{id,category_id,place_id}                               | {{id,category_id,place_id}}                               | /categoryplace              |
+| DeleteCategoryPlace   | GET          | {id}    |                                                              | {"deleted id no ${id}"}                                   | /categoryplace?id=?         |
