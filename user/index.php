@@ -1,6 +1,6 @@
 <?php
 require '../DB.php';
-header('Content-Type: application/json');
+// header('Content-Type: application/json');
 $method = $_SERVER['REQUEST_METHOD'];
 
 
